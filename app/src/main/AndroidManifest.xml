@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".CrearPersonas" />
-        <activity android:name=".DetallePersona"></activity>
+        <activity android:name=".DetallePersona" />
+        <activity android:name=".EditarPersona"></activity>
     </application>
 
 </manifest>

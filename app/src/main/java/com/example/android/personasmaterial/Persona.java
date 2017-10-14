@@ -11,6 +11,10 @@ public class Persona {
     private String apellido;
     private int sexo;
 
+    public Persona (String cedula){
+        this.cedula=cedula;
+    }
+
     public Persona(int foto, String cedula, String nombre, String apellido, int sexo){
         this.foto=foto;
         this.cedula=cedula;
@@ -71,6 +75,10 @@ public class Persona {
 
     public void guardar(){
         Datos.guardarPersona(this);
+    }
+
+    public void actualizar(Persona p) {
+        Datos.actualizarPersona(this, p);
     }
 
 }

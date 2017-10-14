@@ -13,10 +13,27 @@
     <string name="masculino">Masculino</string>
 
     <string name="registro_guardado">Registro Guardado</string>
+    <string name="informacion">Información</string>
+    <string name="sexo">Sexo</string>
 
     <string-array name="sexo">
         <item>@string/femenino</item>
         <item>@string/masculino</item>
     </string-array>
+
+    <string name="modificar">Modificar</string>
+    <string name="eliminar">Eliminar</string>
+
+    <string name="titulo_eliminar_mensaje">Eliminar Persona</string>
+    <string name="eliminar_mensaje">¿Está seguro que desea eliminar a esta persona?</string>
+    <string name="si_eliminar_mensaje">Si</string>
+    <string name="no_eliminar_mensaje">No</string>
+
+    <string name="persona_existente_error">Ya existe una persona registrada con esta cedula</string>
+    <string name="editar_persona">EDITAR PERSONA</string>
+
+    <string name="editar_mensaje">¿Desea editar a esta persona?</string>
+    <string name="no_vacio_error">Este campo no puede estar vacío</string>
+    <string name="limpiarEdit">Limpiar</string>
 
 </resources>

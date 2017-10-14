@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -47,8 +49,11 @@ public class CrearPersonas extends AppCompatActivity {
         sexo = (Spinner) findViewById(R.id.spnSexo);
         opc = res.getStringArray(R.array.sexo);
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, opc);
-
+         sexo.setAdapter(adapter);
         iniciar_fotos();
+
+
+
     }
 
     public void iniciar_fotos() {
@@ -62,6 +67,8 @@ public class CrearPersonas extends AppCompatActivity {
 
 
     public void guardar (View v){
+        if (validar()){
+
          Persona p = new Persona(Metodos.fotoAleatoria(fotos), txtCedula.getText().toString(),
               txtNombre.getText().toString(),txtApellido.getText().toString(),sexo.getSelectedItemPosition());
 
@@ -71,7 +78,13 @@ public class CrearPersonas extends AppCompatActivity {
 
         Snackbar.make(v, res.getString(R.string.registro_guardado), Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
+
+            limpiar();
+        }
     }
+
+    public void limpiar(View v){ limpiar();}
+
 
     public void limpiar(){
         txtCedula.setText("");
@@ -85,5 +98,27 @@ public class CrearPersonas extends AppCompatActivity {
         finish();
         Intent i=new Intent(CrearPersonas.this,Principal.class);
         startActivity(i);
+    }
+
+    public boolean validar(){
+        if (validar_aux(txtCedula,cajaCedula))return false;
+        else if (validar_aux(txtNombre,cajaNombre))return false;
+        else if (validar_aux(txtApellido,cajaApellido))return false;
+        else if (Metodos.existencia_persona(Datos.obteberPersonas(),txtCedula.getText().toString())){
+            txtCedula.setError(res.getString(R.string.persona_existente_error));
+           txtCedula.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+
+    public boolean validar_aux(TextView t, TextInputLayout ct){
+        if (t.getText().toString().isEmpty()){
+            t.requestFocus();
+            t.setError("No puede ser vacio");
+            return  true;
+        }
+        return false;
     }
 }
