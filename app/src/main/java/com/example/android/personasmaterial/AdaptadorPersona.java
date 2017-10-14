@@ -22,10 +22,12 @@ public class AdaptadorPersona extends RecyclerView.Adapter<AdaptadorPersona.Pers
 
     private AbstractList<Persona>personas;
     private Resources res;
+    private OnPersonaClickListener clickListener;
 
-    public AdaptadorPersona(Context contexto, ArrayList<Persona> personas){
+    public AdaptadorPersona(Context contexto, ArrayList<Persona> personas, OnPersonaClickListener clickListener){
         this.personas = personas;
         res = contexto.getResources();
+        this.clickListener=clickListener;
     }
 
 
@@ -39,8 +41,16 @@ public class AdaptadorPersona extends RecyclerView.Adapter<AdaptadorPersona.Pers
     public void onBindViewHolder(AdaptadorPersona.PersonaViewHolder holder, int position) {
         final Persona p = personas.get(position);
         holder.foto.setImageDrawable(ResourcesCompat.getDrawable(res,p.getFoto(),null));
+        holder.cedula.setText(p.getCedula());
         holder.nombre.setText(p.getNombre());
         holder.apellido.setText(p.getApellido());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickListener.onPersonaClick(p);
+            }
+        });
     }
 
     @Override
@@ -50,6 +60,7 @@ public class AdaptadorPersona extends RecyclerView.Adapter<AdaptadorPersona.Pers
 
     public static class PersonaViewHolder extends RecyclerView.ViewHolder{
 
+        private TextView cedula;
         private ImageView foto;
         private TextView nombre;
         private TextView apellido;
@@ -58,9 +69,15 @@ public class AdaptadorPersona extends RecyclerView.Adapter<AdaptadorPersona.Pers
         public PersonaViewHolder(View itemView){
             super(itemView);
 
+
             foto = (ImageView)itemView.findViewById(R.id.imgFoto);
+            cedula = (TextView)itemView.findViewById(R.id.lblCedula);
             nombre = (TextView)itemView.findViewById(R.id.lblNombre);
             apellido = (TextView)itemView.findViewById(R.id.lblApellido);
         }
+    }
+
+    public interface OnPersonaClickListener{
+        void onPersonaClick (Persona p);
     }
 }

@@ -7,5 +7,16 @@
     <string name="limpiar">LIMPIAR</string>
 
     <string name="mensaje_guardado">Registro Guardado</string>
+    <string name="cedula">Cedula</string>
+
+    <string name="femenino">Femenino</string>
+    <string name="masculino">Masculino</string>
+
+    <string name="registro_guardado">Registro Guardado</string>
+
+    <string-array name="sexo">
+        <item>@string/femenino</item>
+        <item>@string/masculino</item>
+    </string-array>
 
 </resources>

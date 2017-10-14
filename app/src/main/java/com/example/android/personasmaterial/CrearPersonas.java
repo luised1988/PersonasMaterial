@@ -8,7 +8,9 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import org.w3c.dom.Text;
 
@@ -16,12 +18,16 @@ import java.util.ArrayList;
 
 public class CrearPersonas extends AppCompatActivity {
 
-    private EditText cajaNombre;
-    private EditText cajaApellido;
-    private TextInputLayout icajaNombre;
-    private TextInputLayout icajaApellido;
+    private EditText txtNombre;
+    private EditText txtApellido;
+    private EditText txtCedula;
+    private TextInputLayout cajaNombre;
+    private TextInputLayout cajaApellido, cajaCedula;
     private ArrayList<Integer> fotos;
     private Resources res;
+    private Spinner sexo;
+    private ArrayAdapter<String> adapter;
+    private String [] opc;
 
 
 
@@ -30,13 +36,23 @@ public class CrearPersonas extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_personas);
 
-        cajaNombre = (EditText)findViewById(R.id.txtNombre);
-        cajaApellido = (EditText)findViewById(R.id.txtApellido);
-
-        icajaNombre = (TextInputLayout) findViewById(R.id.cajaNombre);
-        icajaApellido = (TextInputLayout) findViewById(R.id.cajaApellido);
+       txtCedula = (EditText)findViewById(R.id.txtCedula);
+        txtNombre = (EditText) findViewById(R.id.txtNombre);
+       txtApellido = (EditText) findViewById(R.id.txtApellido);
 
         res = this.getResources();
+        cajaNombre = (TextInputLayout) findViewById(R.id.cajaNombre);
+        cajaApellido = (TextInputLayout) findViewById(R.id.cajaApellido);
+        cajaCedula = (TextInputLayout) findViewById(R.id.cajaCedula);
+        sexo = (Spinner) findViewById(R.id.spnSexo);
+        opc = res.getStringArray(R.array.sexo);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, opc);
+
+        iniciar_fotos();
+    }
+
+    public void iniciar_fotos() {
+
         fotos = new ArrayList<>();
         fotos.add(R.drawable.images);
         fotos.add(R.drawable.images2);
@@ -44,22 +60,25 @@ public class CrearPersonas extends AppCompatActivity {
 
     }
 
+
     public void guardar (View v){
-         Persona p = new Persona(Metodos.fotoAleatoria(fotos),
-                 cajaNombre.getText().toString(),cajaApellido.getText().toString());
+         Persona p = new Persona(Metodos.fotoAleatoria(fotos), txtCedula.getText().toString(),
+              txtNombre.getText().toString(),txtApellido.getText().toString(),sexo.getSelectedItemPosition());
 
 
         p.guardar();
 
 
-        Snackbar.make(v, res.getString(R.string.mensaje_guardado), Snackbar.LENGTH_LONG)
+        Snackbar.make(v, res.getString(R.string.registro_guardado), Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
     }
 
     public void limpiar(){
-        cajaNombre.setText("");
-        cajaApellido.setText("");
-        cajaNombre.requestFocus();
+        txtCedula.setText("");
+        txtNombre.setText("");
+        txtApellido.setText("");
+        sexo.setSelection(0);
+        txtCedula.requestFocus();
     }
 
     public void onBackPressed(){
